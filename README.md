@@ -2,7 +2,7 @@
 
 Basta iniciar o Tomcat e a API irá criar em sua máquina todas às tabelas do banco de dados setado como "pokeapi" (Caso deseje alterar user, password e nome do banco mudar em "application.yml")
 
-Feito isso é possível alimentar a sua base com os pokemons respeitando às colunas.
+feito isso às migrations irão popular a base com os pokémons, e às tabelas de reclacionamento e tipos
 
 O resultado da API irá trazer um json com
 
