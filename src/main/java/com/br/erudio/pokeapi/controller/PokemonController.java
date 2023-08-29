@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.br.erudio.pokeapi.exceptions.PokemonNotFoundException;
+import com.br.erudio.pokeapi.exceptions.Handler.ErroResponse;
 import com.br.erudio.pokeapi.model.Pokemon;
 import com.br.erudio.pokeapi.service.PokemonService;
 
@@ -30,8 +31,11 @@ public class PokemonController {
 
             } catch (PokemonNotFoundException ex) {
 
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
-                
+                ErroResponse erroResponse = new ErroResponse();
+                erroResponse.setStatus(HttpStatus.NOT_FOUND.value());
+                erroResponse.setMensagem(ex.getMessage());
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erroResponse);
+
             }
         
     }
