@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.br.erudio.pokeapi.exceptions.PokemonNotFoundException;
 import com.br.erudio.pokeapi.model.PkPokemonType;
 import com.br.erudio.pokeapi.model.Pokemon;
 import com.br.erudio.pokeapi.projection.PokemonTypeProjection;
@@ -32,7 +33,7 @@ public class PokemonService {
 
         List<PkPokemonType> pokemon_pokemontpye = pkpokemontyperepository.findAllByPokemonId(id);
 
-        Pokemon pokemon = pokemonrepository.findById(id).orElseThrow(() -> new RuntimeException("Pokemon not found with ID: " + id));
+        Pokemon pokemon = pokemonrepository.findById(id).orElseThrow(() -> new PokemonNotFoundException(id));
 
         for (PkPokemonType pkPokemonType : pokemon_pokemontpye) {
 
