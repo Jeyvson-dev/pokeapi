@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.br.erudio.pokeapi.exceptions.PokemonNotFoundException;
 import com.br.erudio.pokeapi.model.PkPokemonType;
 import com.br.erudio.pokeapi.model.Pokemon;
+import com.br.erudio.pokeapi.model.PokemonType;
 import com.br.erudio.pokeapi.projection.PokemonTypeProjection;
 import com.br.erudio.pokeapi.repository.PkPokemonTypeRepository;
 import com.br.erudio.pokeapi.repository.PokemonRepository;
@@ -24,26 +25,25 @@ public class PokemonService {
     PokemonTypeRepository pokemontyperepository;
 
     @Autowired
-    PkPokemonTypeRepository pkpokemontyperepository;
-
+    PkPokemonTypeRepository pkPokemonTypeRepository;
 
     public Pokemon getPokemonById(Long id){
- 
-        List<PokemonTypeProjection> pokemonType = new ArrayList<>();
 
-        List<PkPokemonType> pokemon_pokemontpye = pkpokemontyperepository.findAllByPokemonId(id);
+        List<PokemonTypeProjection> pokemontype = new ArrayList<>();
 
-        Pokemon pokemon = pokemonrepository.findById(id).orElseThrow(() -> new PokemonNotFoundException(id));
+        Pokemon pokemon = pokemonrepository.findById(id)
+                            .orElseThrow(() -> new PokemonNotFoundException(id));
+                            
+        List<PkPokemonType> pokemon_pokemontpye = pkPokemonTypeRepository.findAllByPokemonId(id);    
 
         for (PkPokemonType pkPokemonType : pokemon_pokemontpye) {
 
-            pokemonType.add(pokemontyperepository.findByIdType(pkPokemonType.getIdType()));
+            pokemontype.add(pokemontyperepository.findByIdType(pkPokemonType.getIdType()));
         }
+ 
+        pokemon.setTypes(pokemontype);
 
-        
-        pokemon.setTypes(pokemonType);
-    
         return pokemon;
-                                    
+                                            
     }
 }

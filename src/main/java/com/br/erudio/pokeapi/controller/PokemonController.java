@@ -1,6 +1,7 @@
 package com.br.erudio.pokeapi.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +27,10 @@ public class PokemonController {
 
             try {
                 Pokemon pokemon =  pokemonservice.getPokemonById(id);
+
+                Link link = Link.of("http://localhost:8080/pokeapi/"+ id);
+
+                pokemon.addLink(link);
 
                 return ResponseEntity.ok(pokemon);
 

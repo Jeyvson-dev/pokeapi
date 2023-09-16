@@ -2,10 +2,13 @@ package com.br.erudio.pokeapi.model;
 
 import java.util.Objects;
 
+import javax.persistence.JoinColumn;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Column;
 import jakarta.persistence.Table;
 
@@ -19,6 +22,10 @@ public class PokemonType {
 
     @Column(name = "type_name", length = 50)
     private String type;
+
+    @ManyToOne
+    @JoinColumn(name = "pokemon_id")
+    private Pokemon pokemon;
 
 
     public PokemonType() {
@@ -39,6 +46,17 @@ public class PokemonType {
     public void setType(String type) {
         this.type = type;
     }
+    
+    public Pokemon getPokemon(){
+
+        return this.pokemon;
+    }
+
+    public void setPokemon(Pokemon pokemon){
+
+        this.pokemon = pokemon;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
